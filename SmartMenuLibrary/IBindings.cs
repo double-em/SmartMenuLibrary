@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SmartMenuLibrary
 {
-    public class Class1
+    public interface IBindings
     {
+        string Call(string menuID);
     }
 }
