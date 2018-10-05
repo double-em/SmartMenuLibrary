@@ -11,18 +11,19 @@ namespace SmartMenuLibrary
     {
 
         // Variabler
-        string menuName = "";
-        string menuDescription = "";
-        List<string> menuList = new List<string>();
-        List<string> menuID = new List<string>();
-        List<string> errors = new List<string>();
-        bool pathSet = false;
+        private string menuName = "";
+        private string menuDescription = "";
+        private List<string> menuList = new List<string>();
+        private List<string> menuID = new List<string>();
+        private List<string> errors = new List<string>();
+        private bool pathSet = false;
+        public bool langSet = false;
 
 
         public void LoadMenu(string path)
         {
-            bool langSet = false;
             string lang = "e";
+            SetErrors(lang);
             while (!langSet)
             {
                 // Valg af sprog
@@ -154,6 +155,14 @@ namespace SmartMenuLibrary
         public string MenuList(int listNumber)
         {
             return menuList[listNumber];
+        }
+        public string getmenuDescription()
+        {
+            return menuDescription;
+        }
+        public string getmenuName()
+        {
+            return menuName;
         }
     }
 }
