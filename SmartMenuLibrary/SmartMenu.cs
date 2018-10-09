@@ -24,7 +24,7 @@ namespace SmartMenuLibrary
 
         public void LoadMenu(bool test = false)
         {
-            string path = @"..\..\..\lang\";
+            string path = @"lang\";
             fileNames = Directory.GetFiles(path, "*.txt").Select(Path.GetFileName).ToList();
 
             while (!langSet && !test)
@@ -150,7 +150,7 @@ namespace SmartMenuLibrary
         //Sæt sprog på Errors
         public bool SetErrors(string lang)
         {
-            string path = @"..\..\..\lang\errors\";
+            string path = @"lang\errors\";
             List<string> temp = Directory.GetFiles(path, "*.txt").Select(Path.GetFileName).ToList();
             if (File.Exists(path + lang))
             {
