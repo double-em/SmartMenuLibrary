@@ -15,7 +15,7 @@ namespace SmartMenuLibrary
         public string menuDescription = "";
         public List<string> menuList = new List<string>();
         public List<string> menuID = new List<string>();
-        List<string> errors = new List<string>();
+        public List<string> errors = new List<string>();
         bool pathSet = false;
         bool langSet = false;
         string langSelected;
@@ -24,7 +24,7 @@ namespace SmartMenuLibrary
 
         public void LoadMenu(bool test = false)
         {
-            string path = @"..\..\..\lang";
+            string path = @"..\..\..\lang\";
             fileNames = Directory.GetFiles(path, "*.txt").Select(Path.GetFileName).ToList();
 
             while (!langSet && !test)
@@ -60,6 +60,7 @@ namespace SmartMenuLibrary
                 }
             }
 
+            //Til test only
             while (!langSet && test)
             {
                 if (fileNames.Count > 1)
@@ -80,9 +81,8 @@ namespace SmartMenuLibrary
 
 
             // Henter tekstfilen fra path og laver strings ud fra Navn og Beskrivelse
-            //path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\" + path));
-            path += @"\" + langSelected;
-            if (File.Exists(path))
+            path += langSelected;
+            if (File.Exists(path) && SetErrors(langSelected))
             {
                 string[] lines = File.ReadAllLines(path);
                 menuName = lines[0];
@@ -148,31 +148,24 @@ namespace SmartMenuLibrary
         }
 
         //Sæt sprog på Errors
-        void SetErrors(string lang)
+        public bool SetErrors(string lang)
         {
-            string pathErrors = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\MenuErrors.txt"));
-            string[] temppathErrors = pathErrors.Split('.');
-
-            if (lang == "d")
+            string path = @"..\..\..\lang\errors\";
+            List<string> temp = Directory.GetFiles(path, "*.txt").Select(Path.GetFileName).ToList();
+            if (File.Exists(path + lang))
             {
-                pathErrors = temppathErrors[0] + "DA" + "." + temppathErrors[1];
+                errors = File.ReadAllLines(path + lang).ToList();
+                return true;
+            }
+            else if (temp.Count > 1)
+            {
+                errors = File.ReadAllLines(path + temp[0]).ToList();
+                return true;
             }
             else
             {
-                pathErrors = temppathErrors[0] + "EN" + "." + temppathErrors[1];
-            }
-
-            if (File.Exists(pathErrors))
-            {
-                foreach (string item in File.ReadAllLines(pathErrors))
-                {
-                    errors.Add(item);
-                }
-            }
-            else
-            {
-                Console.WriteLine(pathErrors + " could not be found...");
-                Console.ReadKey(true);
+                Console.WriteLine("Error files was not found...");
+                return false;
             }
         }
     }

@@ -44,5 +44,28 @@ namespace SmartMenuTest
         {
             Assert.AreEqual("(Press Menu number or 0 to exit)", menu.menuDescription);
         }
+        [TestMethod]
+        public void TestErrorsShouldBeEnglish()
+        {
+            Assert.AreEqual(" could not be found...", menu.errors[0]);
+            Assert.AreEqual("ERROR 1: Invalid input", menu.errors[1]);
+            Assert.AreEqual("ERROR 2: This is not a menu", menu.errors[2]);
+        }
+        [TestMethod]
+        public void TestErrorsShouldStillBeEnglish()
+        {
+            menu.SetErrors(@"TestEnglishe.txt");
+            Assert.AreEqual(" could not be found...", menu.errors[0]);
+            Assert.AreEqual("ERROR 1: Invalid input", menu.errors[1]);
+            Assert.AreEqual("ERROR 2: This is not a menu", menu.errors[2]);
+        }
+        [TestMethod]
+        public void TestErrorsShouldBeFrench()
+        {
+            menu.SetErrors(@"TestFrançais.txt");
+            Assert.AreEqual(" blah blah blah", menu.errors[0]);
+            Assert.AreEqual("ERROR 1: blah blah blah", menu.errors[1]);
+            Assert.AreEqual("ERROR 2: blah blah blah", menu.errors[2]);
+        }
     }
 }
