@@ -11,7 +11,7 @@ namespace SmartMenuTest
         private SmartMenu menu;
 
 
-        [TestInitialize]
+        /*[TestInitialize]
         public void SetupForTest()
         {
             menu = new SmartMenu();
@@ -38,6 +38,18 @@ namespace SmartMenuTest
         public void TestMenuDescriptionLoad()
         {
             Assert.AreEqual("(Press Menu number or 0 to exit)", menu.getmenuDescription());
+        }*/
+
+        [TestInitialize]
+        public void SetupForTest()
+        {
+            menu = new SmartMenu();
+            menu.LoadMenu();
+        }
+        [TestMethod]
+        public void Test()
+        {
+            Assert.AreEqual("TestDansk", menu.fileNames[0]);
         }
     }
 }

@@ -1,0 +1,6 @@
+My Fantastic Menu
+(Press Menu number or 0 to exit)
+Do this;DoThis
+Do that;DoThat
+Do something;DoSomething
+Get the Answer to Life, the Universe and Everything;GetTheAnswerToLifeTheUniverseAndEverything

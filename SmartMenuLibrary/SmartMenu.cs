@@ -11,50 +11,57 @@ namespace SmartMenuLibrary
     {
 
         // Variabler
-        private string menuName = "";
-        private string menuDescription = "";
-        private List<string> menuList = new List<string>();
-        private List<string> menuID = new List<string>();
-        private List<string> errors = new List<string>();
-        private bool pathSet = false;
+        string menuName = "";
+        string menuDescription = "";
+        List<string> menuList = new List<string>();
+        List<string> menuID = new List<string>();
+        List<string> errors = new List<string>();
+        bool pathSet = false;
         public bool langSet = false;
+        string langSelected;
+        public List<string> fileNames = new List<string>();
 
 
-        public void LoadMenu(string path)
+        public void LoadMenu(string path = @"..\..\..\lang")
         {
-            string lang = "e";
-            SetErrors(lang);
             while (!langSet)
             {
-                // Valg af sprog
-                Console.Clear();
-                Console.WriteLine("Choose/vælg E for english or/eller D for dansk menu");
-                lang = Console.ReadLine();
-                lang = lang.ToLower();
-                SetErrors(lang);
+                fileNames = Directory.GetFiles(path, "*.txt").Select(Path.GetFileName).ToList();
 
-                if (lang == "e")
+                if (fileNames.Count > 1)
                 {
-                    string[] temppath = path.Split('.');
-                    path = temppath[0] + "EN" + "." + temppath[1];
-                    break;
+                    Console.WriteLine("Please choose a language below:");
+                    for (int i = 0; i < fileNames.Count; i++)
+                    {
+                        Console.WriteLine("\t" + i + ". " + fileNames[i]);
+                    }
+                    Console.Write("Enter option from 1 to " + fileNames.Count + ": ");
+                    if (int.TryParse(Console.ReadLine(), out int userLangSelect))
+                    {
+                        langSelected = fileNames[userLangSelect];
+                        langSet = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine("This is not an option...");
+                        Console.ReadKey(true);
+                    }
                 }
-                else if (lang == "d")
+                else if (fileNames.Count == 1)
                 {
-                    string[] temppath = path.Split('.');
-                    path = temppath[0] + "DA" + "." + temppath[1];
-                    break;
+                    langSelected = fileNames[0];
+                    langSet = true;
                 }
-
                 else
                 {
-                    Console.WriteLine(errors[1]);
-                    Console.ReadKey(true);
+                    throw new Exception("No files found in the lang directory");
                 }
             }
+            
 
             // Henter tekstfilen fra path og laver strings ud fra Navn og Beskrivelse
-            path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\" + path));
+            //path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\" + path));
+            path += @"\" + langSelected;
             if (File.Exists(path))
             {
                 string[] lines = File.ReadAllLines(path);
