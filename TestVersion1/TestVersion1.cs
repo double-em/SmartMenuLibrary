@@ -10,46 +10,39 @@ namespace SmartMenuTest
     {
         private SmartMenu menu;
 
-
-        /*[TestInitialize]
-        public void SetupForTest()
-        {
-            menu = new SmartMenu();
-            string path = "MenuTestEN.txt";
-            menu.langSet = true;
-            menu.LoadMenu(path);
-        }
-        [TestMethod]
-        public void TestMenuIDload()
-        {    
-            Assert.AreEqual("DoThis", menu.MenuID(0));
-        }
-        [TestMethod]
-        public void TestMenuListLoad()
-        {
-            Assert.AreEqual("Do this", menu.MenuList(0));
-        }
-        [TestMethod]
-        public void TestMenuNameload()
-        {
-            Assert.AreEqual("My Fantastic Menu", menu.getmenuName());
-        }
-        [TestMethod]
-        public void TestMenuDescriptionLoad()
-        {
-            Assert.AreEqual("(Press Menu number or 0 to exit)", menu.getmenuDescription());
-        }*/
-
         [TestInitialize]
         public void SetupForTest()
         {
             menu = new SmartMenu();
-            menu.LoadMenu();
+            menu.LoadMenu(true);
         }
         [TestMethod]
-        public void Test()
+        public void TestFilesFound()
         {
-            Assert.AreEqual("TestDansk", menu.fileNames[0]);
+            Assert.AreEqual("TestDansk.txt", menu.fileNames[0]);
+            Assert.AreEqual("TestDeutsch.txt", menu.fileNames[1]);
+            Assert.AreEqual("TestEnglish.txt", menu.fileNames[2]);
+            Assert.AreEqual("TestFrançais.txt", menu.fileNames[3]);
+        }
+        [TestMethod]
+        public void TestMenuIDload()
+        {
+            Assert.AreEqual("DoThis", menu.menuID[0]);
+        }
+        [TestMethod]
+        public void TestMenuListLoad()
+        {
+            Assert.AreEqual("Do this", menu.menuList[0]);
+        }
+        [TestMethod]
+        public void TestMenuNameload()
+        {
+            Assert.AreEqual("My Fantastic Menu", menu.menuName);
+        }
+        [TestMethod]
+        public void TestMenuDescriptionLoad()
+        {
+            Assert.AreEqual("(Press Menu number or 0 to exit)", menu.menuDescription);
         }
     }
 }

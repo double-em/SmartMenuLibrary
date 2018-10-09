@@ -11,29 +11,31 @@ namespace SmartMenuLibrary
     {
 
         // Variabler
-        string menuName = "";
-        string menuDescription = "";
-        List<string> menuList = new List<string>();
-        List<string> menuID = new List<string>();
+        public string menuName = "";
+        public string menuDescription = "";
+        public List<string> menuList = new List<string>();
+        public List<string> menuID = new List<string>();
         List<string> errors = new List<string>();
         bool pathSet = false;
-        public bool langSet = false;
+        bool langSet = false;
         string langSelected;
         public List<string> fileNames = new List<string>();
 
 
-        public void LoadMenu(string path = @"..\..\..\lang")
+        public void LoadMenu(bool test = false)
         {
-            while (!langSet)
-            {
-                fileNames = Directory.GetFiles(path, "*.txt").Select(Path.GetFileName).ToList();
+            string path = @"..\..\..\lang";
+            fileNames = Directory.GetFiles(path, "*.txt").Select(Path.GetFileName).ToList();
 
+            while (!langSet && !test)
+            {
                 if (fileNames.Count > 1)
                 {
                     Console.WriteLine("Please choose a language below:");
                     for (int i = 0; i < fileNames.Count; i++)
                     {
-                        Console.WriteLine("\t" + i + ". " + fileNames[i]);
+                        //Udprinter navnet på sproget uden .txt delen
+                        Console.WriteLine("\t" + i + ". " + fileNames[i].Substring(0, fileNames[i].Length - 4));
                     }
                     Console.Write("Enter option from 1 to " + fileNames.Count + ": ");
                     if (int.TryParse(Console.ReadLine(), out int userLangSelect))
@@ -57,7 +59,25 @@ namespace SmartMenuLibrary
                     throw new Exception("No files found in the lang directory");
                 }
             }
-            
+
+            while (!langSet && test)
+            {
+                if (fileNames.Count > 1)
+                {
+                    langSelected = fileNames[0];
+                    langSet = true;
+                }
+                else if (fileNames.Count == 1)
+                {
+                    langSelected = fileNames[0];
+                    langSet = true;
+                }
+                else
+                {
+                    throw new Exception("No files found in the lang directory");
+                }
+            }
+
 
             // Henter tekstfilen fra path og laver strings ud fra Navn og Beskrivelse
             //path = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\" + path));
@@ -154,22 +174,6 @@ namespace SmartMenuLibrary
                 Console.WriteLine(pathErrors + " could not be found...");
                 Console.ReadKey(true);
             }
-        }
-        public string MenuID(int iDNumber)
-        {
-            return menuID[iDNumber];
-        }
-        public string MenuList(int listNumber)
-        {
-            return menuList[listNumber];
-        }
-        public string getmenuDescription()
-        {
-            return menuDescription;
-        }
-        public string getmenuName()
-        {
-            return menuName;
         }
     }
 }
