@@ -31,16 +31,16 @@ namespace SmartMenuLibrary
             {
                 if (fileNames.Count > 1)
                 {
-                    Console.WriteLine("Please choose a language below:");
+                    Console.WriteLine("Please choose a language below:\n");
                     for (int i = 0; i < fileNames.Count; i++)
                     {
                         //Udprinter navnet på sproget uden .txt delen
-                        Console.WriteLine("\t" + i + ". " + fileNames[i].Substring(0, fileNames[i].Length - 4));
+                        Console.WriteLine("\t" + (i + 1) + ". " + fileNames[i].Substring(0, fileNames[i].Length - 4));
                     }
-                    Console.Write("Enter option from 1 to " + fileNames.Count + ": ");
+                    Console.Write("\nEnter option from 1 to " + fileNames.Count + ": ");
                     if (int.TryParse(Console.ReadLine(), out int userLangSelect))
                     {
-                        langSelected = fileNames[userLangSelect];
+                        langSelected = fileNames[userLangSelect - 1];
                         langSet = true;
                     }
                     else
