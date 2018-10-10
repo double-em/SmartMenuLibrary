@@ -22,7 +22,7 @@ namespace SmartMenuLibrary
         public List<string> fileNames = new List<string>();
 
 
-        public void LoadMenu(bool test = false)
+        public void LoadMenu(bool test)
         {
             string path = @"lang\";
             fileNames = Directory.GetFiles(path, "*.txt").Select(Path.GetFileName).ToList();
@@ -35,12 +35,12 @@ namespace SmartMenuLibrary
                     for (int i = 0; i < fileNames.Count; i++)
                     {
                         //Udprinter navnet på sproget uden .txt delen
-                        Console.WriteLine("\t" + i + ". " + fileNames[i].Substring(0, fileNames[i].Length - 4));
+                        Console.WriteLine("\t" + (i+1) + ". " + fileNames[i].Substring(0, fileNames[i].Length - 4));
                     }
                     Console.Write("Enter option from 1 to " + fileNames.Count + ": ");
                     if (int.TryParse(Console.ReadLine(), out int userLangSelect))
                     {
-                        langSelected = fileNames[userLangSelect];
+                        langSelected = fileNames[userLangSelect-1];
                         langSet = true;
                     }
                     else

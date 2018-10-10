@@ -8,6 +8,6 @@ namespace SmartMenuLibrary
 {
     public interface IBindings
     {
-        string Call(string menuID);
+        void Call(string menuID);
     }
 }
